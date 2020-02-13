@@ -3,8 +3,33 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
+         
+  <servlet>
+  	<servlet-name>blog</servlet-name>
+  	<servlet-class>blog.BlogServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>blog</servlet-name>
+  	<url-pattern>/blog</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+        <servlet-name>sign</servlet-name>
+
+        <servlet-class>blog.SignBlogServlet</servlet-class>
+
+    </servlet>
+
+    <servlet-mapping>
+
+        <servlet-name>sign</servlet-name>
+
+        <url-pattern>/sign</url-pattern>
+
+    </servlet-mapping>
+  
   <welcome-file-list>
-    <welcome-file>index.html</welcome-file>
-    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>blog.jsp</welcome-file>
   </welcome-file-list>
 </web-app>
