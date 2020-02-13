@@ -19,7 +19,6 @@
   
   <body>
 
-
 <%
     String blogName = request.getParameter("blogName");
 
