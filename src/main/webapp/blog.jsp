@@ -18,7 +18,10 @@
   </head>
   
   <body>
-
+  
+	<header>
+		Space
+	</header>
 <%
     String blogName = request.getParameter("blogName");
 
@@ -100,4 +103,3 @@
  
   </body>
 </html>
-
