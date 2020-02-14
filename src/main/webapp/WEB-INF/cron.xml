@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cronentries>
+	<cron>
+		<url>/GAEJCronServlet</url>
+		<description>Daily digest of New Posts</description>
+		<schedule>every 1 minute</schedule>
+	</cron>
+</cronentries>
