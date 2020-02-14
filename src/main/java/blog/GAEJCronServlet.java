@@ -5,6 +5,8 @@ import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
 
+import java.util.*;
+
 @SuppressWarnings("serial")
 
 public class GAEJCronServlet extends HttpServlet {
@@ -17,6 +19,11 @@ public class GAEJCronServlet extends HttpServlet {
 			//Put your logic here
 			//BEGIN
 			System.out.println("Cron Job has been executed");
+			List<String> list = new ArrayList<>();
+			list.add("shawheen14@gmail.com");
+			_logger.info("Attempting to send email");
+			JavaMail.send("shawheenattar@gmail.com", list, "test", "test");
+			_logger.info("email sent");
 			//END
 		} catch (Exception ex) {
 			//Log any exceptions in your Cron Job
