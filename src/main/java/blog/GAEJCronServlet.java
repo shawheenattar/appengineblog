@@ -20,6 +20,7 @@ public class GAEJCronServlet extends HttpServlet {
 			//END
 		} catch (Exception ex) {
 			//Log any exceptions in your Cron Job
+			_logger.info("Cron Job error");
 		}
 	}
 

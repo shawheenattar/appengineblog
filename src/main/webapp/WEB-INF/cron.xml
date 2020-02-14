@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <cronentries>
 	<cron>
-		<url>/GAEJCronServlet</url>
+		<url>/cron/mycronjob</url>
 		<description>Daily digest of New Posts</description>
-		<schedule>every 1 minute</schedule>
+		<schedule>every day 17:00</schedule>
 	</cron>
 </cronentries>
