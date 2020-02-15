@@ -3,6 +3,7 @@
 	<cron>
 		<url>/cron/mycronjob</url>
 		<description>Daily digest of New Posts</description>
-		<schedule>every day 23:00</schedule>
+		<schedule>every day 17:00</schedule>
+		<timezone>America/Chicago</timezone>
 	</cron>
 </cronentries>
