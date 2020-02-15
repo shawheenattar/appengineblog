@@ -51,14 +51,13 @@ public class JavaMail {
 
 		try {
             Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress("shawheen14@gmail.com"));
+            message.setFrom(new InternetAddress(from));
             message.setRecipients(
                     Message.RecipientType.TO,
-                    InternetAddress.parse("shawheen14@gmail.com, shawheen@sbcglobal.net")
+                    InternetAddress.parse(String.join(",", recipients))
             );
-            message.setSubject("Testing Gmail TLS");
-            message.setText("Dear Mail Crawler,"
-                    + "\n\n Please do not spam my email!");
+            message.setSubject(subject);
+            message.setText(text);
 
             Transport.send(message);
 

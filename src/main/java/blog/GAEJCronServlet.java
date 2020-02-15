@@ -17,14 +17,10 @@ public class GAEJCronServlet extends HttpServlet {
 		try {
 			_logger.info("Cron Job has been executed");
 			//Put your logic here
-			//BEGIN
-			System.out.println("Cron Job has been executed");
 			List<String> list = new ArrayList<>();
 			list.add("shawheen14@gmail.com");
-			_logger.info("Attempting to send email");
-			JavaMail.send("shawheenattar@gmail.com", list, "test", "test");
-			_logger.info("email sent");
-			//END
+			JavaMail.send("shawheen14@gmail.com", list, "test", "test");
+
 		} catch (Exception ex) {
 			//Log any exceptions in your Cron Job
 			_logger.info("Cron Job error");
