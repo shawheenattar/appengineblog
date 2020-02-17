@@ -70,8 +70,11 @@ public class JavaMail {
                     Message.RecipientType.TO,
                     InternetAddress.parse(String.join(",", recipients))
             );
-            message.setSubject(subject);
-            message.setText(text);
+            message.setSubject("The News From a Galaxy Far Far Away");
+//            message.setText(text);
+            message.setContent(
+                    "<h1>Episode X</h1><p><a href='https://sinuous-studio-268122.appspot.com/unsubscribe.html'>Unsubscribe</a></p>",
+                   "text/html");
 
             Transport.send(message);
 
