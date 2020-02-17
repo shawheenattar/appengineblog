@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Unsubscribe</title>
+</head>
+<body>
+	<div id="subscribe-container">
+		<h2>Enter your email to unsubscribe and send the rest of the emails to a blackhole</h2>
+		<form action="/unsubscribe" method="post">
+			<div>
+				<input name="email-content" type="email" />
+			</div>
+			<div>
+				<input type="submit" value="Unsubscribe" />
+			</div>
+		</form>
+		<input type="hidden" name="blogName" value="${fn:escapeXml(blogName)}" />
+	</div>
+</body>
+</html>

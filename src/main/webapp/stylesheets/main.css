@@ -10,8 +10,6 @@ header{
 	background-size: cover;
 }
 
-
-
 body {
 	font-family: Verdana, Helvetica, sans-serif;
 	margin: 0;
@@ -24,4 +22,21 @@ textarea {
 #subscribe-container {
 	text-align: center;
 	padding: 20px;
+}
+
+
+#postTitles{
+	font-family: Didot;
+	font-size: 20px;
+}
+
+#titles{
+	font-family: Didot;
+	font-size: 24px;
+	
+}
+
+#mainPage{
+	margin-left: 20px;
+	margin-right: 20px;
 }

@@ -50,7 +50,7 @@
 		if (user != null) {
 			pageContext.setAttribute("user", user);
 	%>
-
+	<div id="mainPage">
 	<p>
 		Hello, ${fn:escapeXml(user.nickname)}! (You can <a
 			href="<%=userService.createLogoutURL(request.getRequestURI())%>">sign
@@ -69,8 +69,27 @@
 
 	<%
 		}
+
+    	if (user == null) {
+    	
+    	} else {
 	%>
 
+    <form action="/sign" method="post">
+      <hr></hr>
+      <p id="titles">New Awesome Space Post</p>
+      <p>Title:</p>
+      <div><textarea name="title" rows="1" cols="60"></textarea></div>
+      <p>Content:</p>
+      <div><textarea name="content" rows="3" cols="60"></textarea></div>
+      <div><input type="submit" value="Submit Post"/></div>
+      <input type="hidden" name="blogName" value="${fn:escapeXml(blogName)}"/>
+    </form>
+   
+	<%
+ 	   }
+	%>
+	
 	<%
 		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 		Key blogKey = KeyFactory.createKey("Blog", blogName);
@@ -87,12 +106,15 @@
 	<%
 		} else {
 	%>
-
-	<p>Messages in Blog '${fn:escapeXml(blogName)}'.</p>
+	
+	<hr></hr>
+	<p id="titles">Space Posts:</p>
 
 	<%
 		for (Entity greeting : greetings) {
 				pageContext.setAttribute("greeting_content", greeting.getProperty("content"));
+				 pageContext.setAttribute("greeting_date", greeting.getProperty("date"));
+			        pageContext.setAttribute("greeting_title", greeting.getProperty("title"));
 
 				if (greeting.getProperty("user") == null) {
 	%>
@@ -102,6 +124,7 @@
 	<%
 		} else {
 					pageContext.setAttribute("greeting_user", greeting.getProperty("user"));
+					
 	%>
 
 	<p>
@@ -112,22 +135,14 @@
 		}
 	%>
 
-	<blockquote>${fn:escapeXml(greeting_content)}</blockquote>
+	<blockquote id="postTitles">Post Title: ${fn:escapeXml(greeting_title)}</blockquote>
+	<blockquote>Content: ${fn:escapeXml(greeting_content)}</blockquote>
+	<blockquote>On: ${fn:escapeXml(greeting_date)}</blockquote>
 
 	<%
 		}
 		}
 	%>
-
-	<form action="/sign" method="post">
-		<div>
-			<textarea name="content" rows="3" cols="60"></textarea>
-		</div>
-		<div>
-			<input type="submit" value="Post Greeting" />
-		</div>
-		<input type="hidden" name="blogName" value="${fn:escapeXml(blogName)}" />
-	</form>
-
+	</div>
 </body>
 </html>
