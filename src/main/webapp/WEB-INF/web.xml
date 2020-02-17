@@ -24,6 +24,16 @@
 		<url-pattern>/sign</url-pattern>
 	</servlet-mapping>
 	
+	<servlet>
+		<servlet-name>subscribe</servlet-name>
+		<servlet-class>blog.Subscribe</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>subscribe</servlet-name>
+		<url-pattern>/subscribe</url-pattern>
+	</servlet-mapping>
+	
 	
 	<servlet>
 		<servlet-name>GAEJCronServlet</servlet-name>
