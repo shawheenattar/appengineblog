@@ -10,29 +10,43 @@ import java.io.InputStream;
 import java.util.*;
 import java.util.logging.Logger;
 
-/**
- * @author shawheen14@gmail.com
- **/
+import com.google.appengine.api.users.User;
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.FetchOptions;
+import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
+
+import java.util.regex.Matcher; 
+import java.util.regex.Pattern; 
+
 public class JavaMail {
 
 	private static final Logger _logger = Logger.getLogger(GAEJCronServlet.class.getName());
-
-	/**
-	 * Sends an email message with attachments.
-	 *
-	 * @param from        email address from which the message will be sent.
-	 * @param recipients  array of strings containing the recipients of the message.
-	 * @param subject     subject header field.
-	 * @param text        content of the message.
-	 * @throws MessagingException
-	 * @throws IOException
-	 */
-	public static void send(String from, Collection<String> recipients, String subject, String text) 
-			throws MessagingException, IOException {
+	
+	private static Set<String> getEmails() {
+		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+		Key blogKey = KeyFactory.createKey("Blog", "Space");
 		
-		// check for null references
-		Objects.requireNonNull(from);
-		Objects.requireNonNull(recipients);
+		Query query = new Query("Subscribed-Email", blogKey).addSort("email", Query.SortDirection.DESCENDING);
+		List<Entity> emailList = datastore.prepare(query).asList(FetchOptions.Builder.withDefaults());
+		
+		Set<String> emailListOut = new HashSet<String>();
+		for (Entity email : emailList) {		
+			emailListOut.add((String) email.getProperty("email"));
+		}
+		
+		return emailListOut;
+	}
+
+	public static void sendDailyDigest(String from, String subject, String text) 
+			throws MessagingException, IOException {
+				
+		Set<String> recipients = getEmails();
 
 		final String username = "shawheen14@gmail.com";
 		final String password = "rzxqvhzjwytbfotd";

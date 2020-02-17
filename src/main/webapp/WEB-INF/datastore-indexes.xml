@@ -6,7 +6,7 @@
 		<property name="date" direction="desc" />
 	</datastore-index>
 	
-	<datastore-index kind="Subscribed Email" ancestor="true"
+	<datastore-index kind="Subscribed-Email" ancestor="true"
 		source="manual">
 		<property name="email" direction="desc" />
 	</datastore-index>

@@ -25,29 +25,24 @@
 		<h2>Join to go where no man has gone before</h2>
 	</header>
 
+	<%
+		String blogName = "Space";
+	%>
+
 	<div id="subscribe-container">
 		<h2>Enter your email to get the Daily Digest!</h2>
 		<form action="/subscribe" method="post">
 			<div>
-				<textarea name="content" rows="1" cols="60"></textarea>
+				<input name="email-content" type="email" />
 			</div>
 			<div>
 				<input type="submit" value="Subscribe" />
 			</div>
-			<input type="hidden" name="blogName"
-				value="${fn:escapeXml(blogName)}" />
 		</form>
+		<input type="hidden" name="blogName" value="${fn:escapeXml(blogName)}" />
 	</div>
 
-
-
 	<%
-		String blogName = request.getParameter("blogName");
-
-		if (blogName == null) {
-			blogName = "default";
-		}
-
 		pageContext.setAttribute("blogName", blogName);
 		UserService userService = UserServiceFactory.getUserService();
 		User user = userService.getCurrentUser();
@@ -83,7 +78,8 @@
 		// view of the Greetings belonging to the selected Guestbook.
 		Query query = new Query("Greeting", blogKey).addSort("user", Query.SortDirection.DESCENDING).addSort("date",
 				Query.SortDirection.DESCENDING);
-		List<Entity> greetings = datastore.prepare(query).asList(FetchOptions.Builder.withLimit(5));
+		List<Entity> greetings = datastore.prepare(query).asList(FetchOptions.Builder.withDefaults());
+
 		if (greetings.isEmpty()) {
 	%>
 	<p>Blog '${fn:escapeXml(blogName)}' has no messages.</p>
