@@ -24,6 +24,8 @@ import com.google.appengine.api.datastore.KeyFactory;
 import java.util.regex.Matcher; 
 import java.util.regex.Pattern; 
 
+
+
 public class JavaMail {
 
 	private static final Logger _logger = Logger.getLogger(GAEJCronServlet.class.getName());
@@ -72,9 +74,7 @@ public class JavaMail {
             );
             message.setSubject("The News From a Galaxy Far Far Away");
 //            message.setText(text);
-            message.setContent(
-                    "<h1>Episode X</h1><p><a href='https://sinuous-studio-268122.appspot.com/unsubscribe.html'>Unsubscribe</a></p>",
-                   "text/html");
+            message.setContent(text, "text/html");
 
             Transport.send(message);
 

@@ -21,31 +21,13 @@
 
 <body>
 
-	<div id="crawlPage">
-		<div class="fade"></div>
-
-		<section class="star-wars">
-			<div class="crawl">
-				<div class="title">
-					<p>Space</p>
-					<h1>The Final Frontier</h1>
-				</div>
-				<p>These are the voyages of the starship Enterprise. Its five-year mission: </p>
-				<p>to explore strange new worlds;</p>
-				<p>to seek out new life and new civilizations;</p>
-				<p>to boldly go where no man has gone before.</p>
-			</div>
-			
-		</section>
-		<button id="enterButton" onclick="enterSite()">Enter Site</button>
-	</div>
-
+	<header>
+		<h1>Space: the Final Frontier</h1>
+		<p>Join to go where no man has gone before</p>
+	</header>
 	<div id="mainPage">
 
-		<header>
-			<h1>Space: the Final Frontier</h1>
-			<p>Join to go where no man has gone before</p>
-		</header>
+
 
 		<%
 			String blogName = "Space";
@@ -64,6 +46,8 @@
 			<input type="hidden" name="blogName"
 				value="${fn:escapeXml(blogName)}" />
 		</div>
+
+		<button onclick="postToggle()">Create Post</button>
 
 		<%
 			pageContext.setAttribute("blogName", blogName);
@@ -97,23 +81,26 @@
 			} else {
 		%>
 
-		<form action="/sign" method="post">
+		<div id="newPost">
 			<hr></hr>
-			<p id="titles">New Awesome Space Post</p>
-			<p>Title:</p>
-			<div>
-				<textarea name="title" rows="1" cols="60"></textarea>
-			</div>
-			<p>Content:</p>
-			<div>
-				<textarea name="content" rows="3" cols="60"></textarea>
-			</div>
-			<div>
-				<input type="submit" value="Submit Post" />
-			</div>
-			<input type="hidden" name="blogName"
-				value="${fn:escapeXml(blogName)}" />
-		</form>
+			<button id="closePost" onclick="closePost()">Close Draft</button>
+			<form action="/sign" method="post">
+				<p id="titles">New Awesome Space Post</p>
+				<p>Title:</p>
+				<div>
+					<textarea name="title" rows="1" cols="60"></textarea>
+				</div>
+				<p>Content:</p>
+				<div>
+					<textarea name="content" rows="3" cols="60"></textarea>
+				</div>
+				<div>
+					<input type="submit" value="Submit Post" />
+				</div>
+				<input type="hidden" name="blogName"
+					value="${fn:escapeXml(blogName)}" />
+			</form>
+		</div>
 
 		<%
 			}
@@ -130,48 +117,100 @@
 
 			if (greetings.isEmpty()) {
 		%>
-		<p>Blog '${fn:escapeXml(blogName)}' has no messages.</p>
+				<p>Blog '${fn:escapeXml(blogName)}' has no messages.</p>
 
 		<%
 			} else {
 		%>
 
-		<hr></hr>
-		<p id="titles">Space Posts:</p>
+				<hr></hr>
+				<p id="titles">Space Posts:</p>
 
 		<%
-			for (Entity greeting : greetings) {
+		
+				for (int i = 0; i < 5; i++) {
+				
+					if ((i + 1) > greetings.size() ) {
+						break;
+					}
+					
+					Entity greeting = greetings.get(i);
+					
 					pageContext.setAttribute("greeting_content", greeting.getProperty("content"));
 					pageContext.setAttribute("greeting_date", greeting.getProperty("date"));
 					pageContext.setAttribute("greeting_title", greeting.getProperty("title"));
-
+	
 					if (greeting.getProperty("user") == null) {
 		%>
 
-		<p>An anonymous person wrote:</p>
+						<p>An anonymous person wrote:</p>
 
 		<%
-			} else {
+					} else {
 						pageContext.setAttribute("greeting_user", greeting.getProperty("user"));
 		%>
 
-		<p>
-			<b>${fn:escapeXml(greeting_user.nickname)}</b> wrote:
-		</p>
+						<p>
+							<b>${fn:escapeXml(greeting_user.nickname)}</b> wrote:
+						</p>
 
 		<%
-			}
+					}
 		%>
 
-		<blockquote id="postTitles">Post Title:
-			${fn:escapeXml(greeting_title)}</blockquote>
-		<blockquote>Content: ${fn:escapeXml(greeting_content)}</blockquote>
-		<blockquote>On: ${fn:escapeXml(greeting_date)}</blockquote>
+						<blockquote id="postTitles">Post Title:
+							${fn:escapeXml(greeting_title)}</blockquote>
+						<blockquote>Content: ${fn:escapeXml(greeting_content)}</blockquote>
+						<blockquote>On: ${fn:escapeXml(greeting_date)}</blockquote>
 
 		<%
-			}
+				}
 			}
 		%>
+		
+		<button id="showAllButton" onclick="showAllPosts()">Show All Posts</button>
+		
+		<div id="extraPosts">
+		
+		<%
+			if (greetings.size() > 5) {
+				
+			
+				for (int i = 5; i < greetings.size(); i++) {
+					Entity greeting = greetings.get(i);
+						pageContext.setAttribute("greeting_content", greeting.getProperty("content"));
+						pageContext.setAttribute("greeting_date", greeting.getProperty("date"));
+						pageContext.setAttribute("greeting_title", greeting.getProperty("title"));
+	
+						if (greeting.getProperty("user") == null) {
+		%>
+
+							<p>An anonymous person wrote:</p>
+
+		<%
+						} else {
+							pageContext.setAttribute("greeting_user", greeting.getProperty("user"));
+		%>
+
+							<p>
+								<b>${fn:escapeXml(greeting_user.nickname)}</b> wrote:
+							</p>
+
+		<%
+						}
+		%>
+
+					<blockquote id="postTitles">Post Title:
+						${fn:escapeXml(greeting_title)}</blockquote>
+					<blockquote>Content: ${fn:escapeXml(greeting_content)}</blockquote>
+					<blockquote>On: ${fn:escapeXml(greeting_date)}</blockquote>
+
+		<%
+				}
+			}
+			
+		%>
+		</div>
 	</div>
 </body>
 </html>

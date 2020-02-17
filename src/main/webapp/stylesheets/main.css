@@ -3,15 +3,19 @@ header{
 	text-align: center;
 	font-weight: 600;
 	font-size: 40px;
-	color: White;
-	font-family: Didot;
+	color: #feda4a;
+	font-family: 'Pathway Gothic One', sans-serif;
 	background: url(https://cdn.pixabay.com/photo/2016/08/03/09/03/universe-1566159_960_720.jpg);
 	background-repeat: no-repeat;
 	background-size: cover;
 }
 
+header h1, header p {
+	transform: perspective(400px) rotateX(20deg);
+}
+
 body {
-	font-family: Verdana, Helvetica, sans-serif;
+	font-family: 'Pathway Gothic One', sans-serif;
 	margin: 0;
 }
 
@@ -22,6 +26,10 @@ textarea {
 #subscribe-container {
 	text-align: center;
 	padding: 20px;
+}
+
+#extraPosts {
+	display: none;
 }
 
 
@@ -36,79 +44,13 @@ textarea {
 	
 }
 
+
 #mainPage{
-	margin-left: 20px;
-	margin-right: 20px;
-	display:none;
+	padding-left: 20px;
+	padding-right: 20px;
 }
 
-#enterButton {
-	position: absolute;
-	width: 100px;
-	bottom: 10%;
-	left: 50%;
-	margin-left: -50px;
-	z-index: 1;
+#newPost {
+	display: none;
 }
 
-body {
-  width: 100%;
-  height: 100%;
-  background: #000;
-  overflow: hidden;
-}
-
-.fade {
-  position: relative;
-  width: 100%;
-  min-height: 60vh;
-  top: -25px;
-  background-image: linear-gradient(0deg, transparent, black 75%);
-}
-
-.star-wars {
-  display: flex;
-  justify-content: center;
-  position: relative;
-  height: 800px;
-  color: #feda4a;
-  font-family: 'Pathway Gothic One', sans-serif;
-  font-size: 500%;
-  font-weight: 600;
-  letter-spacing: 6px;
-  line-height: 150%;
-  perspective: 400px;
-  text-align: justify;
-}
-
-.crawl {
-  position: relative;
-  top: 99999px;
-  transform-origin: 50% 100%;
-  animation: crawl 30s linear;
-}
-
-.crawl > .title {
-  font-size: 90%;
-  text-align: center;
-}
-
-.crawl > .title h1 {
-  margin: 0 0 100px;
-  text-transform: uppercase;
-}
-
-@keyframes crawl {
-    0% {
-    top: -100px;
-    transform: rotateX(20deg)  translateZ(0);
-  }
-    100% { 
-    top: -6000px;
-    transform: rotateX(25deg) translateZ(-2500px);
-  }
-}
-
-
-
-Resources
