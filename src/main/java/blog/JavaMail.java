@@ -69,7 +69,7 @@ public class JavaMail {
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(from));
             message.setRecipients(
-                    Message.RecipientType.TO,
+                    Message.RecipientType.BCC,
                     InternetAddress.parse(String.join(",", recipients))
             );
             message.setSubject("The News From a Galaxy Far Far Away");

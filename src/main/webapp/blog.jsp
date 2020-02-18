@@ -12,6 +12,9 @@
 <%@ page import="com.google.appengine.api.datastore.Key"%>
 <%@ page import="com.google.appengine.api.datastore.KeyFactory"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ page import="java.util.Date" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.TimeZone" %>
 
 <html>
 <head>
@@ -44,7 +47,7 @@
 				%>
 				<p>
 					Hello, ${fn:escapeXml(user.nickname)}! (You can <a
-						href="<%=userService.createLogoutURL(request.getRequestURI())%>">sign
+						style="color: white" href="<%=userService.createLogoutURL(request.getRequestURI())%>">sign
 						out</a>.)
 				</p>
 
@@ -54,7 +57,7 @@
 
 				<p>
 					Hello! <a
-						href="<%=userService.createLoginURL(request.getRequestURI())%>">
+						style="color: white" href="<%=userService.createLoginURL(request.getRequestURI())%>">
 						Sign in</a> to include your name with greetings you post.
 				</p>
 
@@ -81,12 +84,11 @@
 			</div>
 			<div class="clear"></div>
 		</div>
-
+		<br>
 		
-
+		<!-- This part added while Shawheen was driving -->
 
 		<%
-
 			if (user == null) {
 
 			} else {
@@ -98,7 +100,10 @@
 
 		<div id="newPost">
 			<hr></hr>
+			<br><br>
+			<div style="width: 100%; text-align:center">
 			<button id="closePost" onclick="closePost()">Close Draft</button>
+			</div>
 			<form action="/sign" method="post">
 				<p id="titles">New Awesome Space Post</p>
 				<p>Title:</p>
@@ -107,7 +112,7 @@
 				</div>
 				<p>Content:</p>
 				<div>
-					<textarea name="content" rows="3" cols="60"></textarea>
+					<textarea name="content" rows="10" cols="100"></textarea>
 				</div>
 				<div>
 					<input type="submit" value="Submit Post" />
@@ -116,6 +121,8 @@
 					value="${fn:escapeXml(blogName)}" />
 			</form>
 		</div>
+		
+		<!-- This part added while Adrian was driving -->
 
 		<%
 			}
@@ -126,18 +133,16 @@
 			Key blogKey = KeyFactory.createKey("Blog", blogName);
 			// Run an ancestor query to ensure we see the most up-to-date
 			// view of the Greetings belonging to the selected Guestbook.
-			Query query = new Query("Greeting", blogKey).addSort("user", Query.SortDirection.DESCENDING).addSort("date",
-					Query.SortDirection.DESCENDING);
+			Query query = new Query("Greeting", blogKey).addSort("date", Query.SortDirection.DESCENDING);
 			List<Entity> greetings = datastore.prepare(query).asList(FetchOptions.Builder.withDefaults());
 
 			if (greetings.isEmpty()) {
 		%>
-			<p>Blog '${fn:escapeXml(blogName)}' has no messages.</p>
+			<p>'${fn:escapeXml(blogName)}' Blog has no messages.</p>
 
 			<%
 			} else {
 		%>
-
 			<hr></hr>
 			<p id="titles">Space Posts:</p>
 
@@ -151,8 +156,16 @@
 					
 					Entity greeting = greetings.get(i);
 					
+					Date date = (Date) greeting.getProperty("date");
+					String pattern = "hh:mm a, MM-dd-yyyy";
+					SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+					
+					simpleDateFormat.setTimeZone(TimeZone.getTimeZone("America/Chicago"));
+					
+					String newDate = simpleDateFormat.format(date);
+					
 					pageContext.setAttribute("greeting_content", greeting.getProperty("content"));
-					pageContext.setAttribute("greeting_date", greeting.getProperty("date"));
+					pageContext.setAttribute("greeting_date", newDate);
 					pageContext.setAttribute("greeting_title", greeting.getProperty("title"));
 	
 					if (greeting.getProperty("user") == null) {
@@ -173,29 +186,40 @@
 					}
 		%>
 
-			<blockquote id="postTitles">Post Title:
-				${fn:escapeXml(greeting_title)}</blockquote>
-			<blockquote>Content: ${fn:escapeXml(greeting_content)}</blockquote>
-			<blockquote>On: ${fn:escapeXml(greeting_date)}</blockquote>
+			<blockquote id="postTitles"><strong>${fn:escapeXml(greeting_title)}</strong></blockquote>
+			<blockquote>${fn:escapeXml(greeting_date)}</blockquote>
+			<blockquote>${fn:escapeXml(greeting_content)}</blockquote>
+			<br><br>
 
 			<%
 				}
 			}
+			
 		%>
 
-			<button id="showAllButton" onclick="showAllPosts()">Show All
-				Posts</button>
-
-			<div id="extraPosts">
+			
 
 				<%
 			if (greetings.size() > 5) {
 				
+				%>
+				<button id="showAllButton" onclick="showAllPosts()">Show All
+				Posts</button>
+
+			<div id="extraPosts">
+			<%
 			
 				for (int i = 5; i < greetings.size(); i++) {
 					Entity greeting = greetings.get(i);
+					
+						Date date = (Date) greeting.getProperty("date");
+						String pattern = "hh:mm a, MM-dd-yyyy";
+						SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+						
+						String newDate = simpleDateFormat.format(date);
+						
 						pageContext.setAttribute("greeting_content", greeting.getProperty("content"));
-						pageContext.setAttribute("greeting_date", greeting.getProperty("date"));
+						pageContext.setAttribute("greeting_date", newDate);
 						pageContext.setAttribute("greeting_title", greeting.getProperty("title"));
 	
 						if (greeting.getProperty("user") == null) {
@@ -203,7 +227,7 @@
 
 				<p>An anonymous person wrote:</p>
 
-				<%
+		<%
 						} else {
 							pageContext.setAttribute("greeting_user", greeting.getProperty("user"));
 		%>
@@ -212,21 +236,23 @@
 					<b>${fn:escapeXml(greeting_user.nickname)}</b> wrote:
 				</p>
 
-				<%
+		<%
 						}
 		%>
 
-				<blockquote id="postTitles">Post Title:
-					${fn:escapeXml(greeting_title)}</blockquote>
-				<blockquote>Content: ${fn:escapeXml(greeting_content)}</blockquote>
-				<blockquote>On: ${fn:escapeXml(greeting_date)}</blockquote>
-
-				<%
+				<blockquote id="postTitles"><strong>${fn:escapeXml(greeting_title)}</strong></blockquote>
+				<blockquote>${fn:escapeXml(greeting_date)}</blockquote>
+				<blockquote>${fn:escapeXml(greeting_content)}</blockquote>
+				<br><br>
+				
+		<%
 				}
 			}
 			
 		%>
 			</div>
 		</div>
+		
+		<!-- This part added while Shawheen was driving -->
 </body>
 </html>

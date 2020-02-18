@@ -1,5 +1,12 @@
+body {
+	font-family: 'Pathway Gothic One', sans-serif;
+	margin: 0;
+	background: black;
+	color: #feda4a;
+}
+
 button {
-  background-color: #feda4a; /* Green */
+  background-color: #feda4a;
   border: none;
   color: black;
   padding: 15px 32px;
@@ -30,22 +37,18 @@ header h1, header p, header a {
 	color: #feda4a;
 }
 
-body {
-	font-family: 'Pathway Gothic One', sans-serif;
-	margin: 0;
-	background: black;
-	color: #feda4a;
+textarea {
+	font-size: 14px;
 }
 
-textarea {
-	resize: none;
+#mainPage{
+	padding: 50px;	
 }
 
 #top-left {
 	float: left;
 	width: 50%;
 }
-
 
 #top-left p {
 	padding: 0;
@@ -58,7 +61,8 @@ textarea {
  	margin-left: 50%;
  	width: 50%;
 } 
-#top-rigth p {
+
+#top-right p {
 	padding: 0;
 	margin: 0;
 } 
@@ -72,11 +76,13 @@ textarea {
 	clear: both;
 }
 
+/* This part added while Shawheen was driving */ 
+
 #subscribe-container {
 	display: inline-block;
 	text-align: right;
 	position: absolute;
-	right: 20px;
+	right: 50px;
 }
 
 #extraPosts {
@@ -95,14 +101,10 @@ textarea {
 	
 }
 
-
-#mainPage{
-	padding-left: 20px;
-	padding-right: 20px;
-}
-
 #newPost {
 	display: none;
 	text-align:center;
 }
+
+/* This part added while Adrian was driving */ 
 

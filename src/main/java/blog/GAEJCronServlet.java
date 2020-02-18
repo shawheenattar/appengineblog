@@ -1,6 +1,7 @@
 package blog;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
@@ -40,7 +41,7 @@ public class GAEJCronServlet extends HttpServlet {
 			String blogName = "Space";
 			Key blogKey = KeyFactory.createKey("Blog", blogName);
 
-			Query query = new Query("Greeting", blogKey);
+			Query query = new Query("Greeting", blogKey).addSort("date", Query.SortDirection.DESCENDING);;
 			List<Entity> blogList = datastore.prepare(query).asList(FetchOptions.Builder.withDefaults());
 			List<Entity> newPosts = new ArrayList<Entity>();
 
@@ -56,26 +57,34 @@ public class GAEJCronServlet extends HttpServlet {
 				}
 			}
 			
-			
+			//This part added while Adrian was driving
 
 			Document doc = Document.createShell("");
 
-			Element headline = doc.body().appendElement("h1").text("Daily Digest");
+			doc.body().appendElement("h1").text("Star Fleet Space News");
+			doc.body().appendElement("h2").text("Shawheen and Adrian's Space Blog");
 
 			for (Entity blog : newPosts) {
 				String title = (String) blog.getProperty("title");
 				User userObj = (User) blog.getProperty("user");
 				String user = userObj.getNickname();
-				Date dateObj = (Date) blog.getProperty("date");
-				String date = dateObj.toString();
+				Date date = (Date) blog.getProperty("date");
 				String content = (String) blog.getProperty("content");
+				
+				String pattern = "hh:mm a, MM-dd-yyyy";
+				SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+				
+				simpleDateFormat.setTimeZone(TimeZone.getTimeZone("America/Chicago"));
+				
+				String newDate = simpleDateFormat.format(date);
 
 				if (blog.getProperty("user") == null) {
 					user = "Anonymous";
 				} 
+				doc.body().appendElement("hr");
 				doc.body().appendElement("h3").text(title);
-				doc.body().appendElement("h4").text(user);
-				doc.body().appendElement("h4").text(date);
+				doc.body().appendElement("h4").text("Written by: " + user);
+				doc.body().appendElement("h4").text("Date: " + newDate);
 				doc.body().appendElement("p").text(content);
 				
 			}
@@ -88,6 +97,8 @@ public class GAEJCronServlet extends HttpServlet {
 				String body = doc.toString();
 				JavaMail.sendDailyDigest(from, subject, body);
 			}
+			
+			//This part added while Shawheen was driving
 
 		} catch (Exception ex) {
 			// Log any exceptions in your Cron Job
@@ -101,3 +112,4 @@ public class GAEJCronServlet extends HttpServlet {
 		doGet(req, resp);
 	}
 }
+

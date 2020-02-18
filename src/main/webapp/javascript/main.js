@@ -29,3 +29,5 @@ function showAllPosts() {
 	var showButton = document.getElementById("showAllButton");
 	showButton.style.display = 'none';
 }
+
+/* his part added while Shawheen was driving */ 

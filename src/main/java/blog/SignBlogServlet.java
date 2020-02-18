@@ -48,3 +48,5 @@ public class SignBlogServlet extends HttpServlet {
         resp.sendRedirect("/blog.jsp?blogName=" + blogName);
     }
 }
+
+//This part added while Shawheen was driving

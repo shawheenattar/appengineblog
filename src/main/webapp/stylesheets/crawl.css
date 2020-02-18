@@ -4,6 +4,7 @@ body {
   background: #000;
   overflow: hidden;
   background: url(https://img.wallpapersafari.com/desktop/1920/1080/96/60/ZBf0Im.jpg);
+  font-family: 'Pathway Gothic One', sans-serif;
 }
 
 .fade {
@@ -61,11 +62,22 @@ body {
 #enterButton {
 	position: absolute;
 	width: 100px;
-	bottom: 10%;
-	left: 50%;
+	bottom: 50%;
+	right: 50px;
 	margin-left: -50px;
 	z-index: 1;
 	color: white;
 	text-decoration: underline;
+	background-color: #feda4a;
+	border: none;
+	color: black;
+	padding: 15px 32px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+	cursor: pointer;
+	border-radius: 5px;
 }
 
+/* This part added while Shawheen was driving */ 
