@@ -1,3 +1,16 @@
+button {
+  background-color: #feda4a; /* Green */
+  border: none;
+  color: black;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
 header{
 	padding: 10px;
 	text-align: center;
@@ -5,27 +18,65 @@ header{
 	font-size: 40px;
 	color: #feda4a;
 	font-family: 'Pathway Gothic One', sans-serif;
-	background: url(https://cdn.pixabay.com/photo/2016/08/03/09/03/universe-1566159_960_720.jpg);
+	background: url(https://img.wallpapersafari.com/desktop/1920/1080/96/60/ZBf0Im.jpg);
 	background-repeat: no-repeat;
 	background-size: cover;
 }
 
-header h1, header p {
+header h1, header p, header a {
 	transform: perspective(400px) rotateX(20deg);
+	margin: 10px;
+	text-decoration: none;
+	color: #feda4a;
 }
 
 body {
 	font-family: 'Pathway Gothic One', sans-serif;
 	margin: 0;
+	background: black;
+	color: #feda4a;
 }
 
 textarea {
 	resize: none;
 }
 
-#subscribe-container {
+#top-left {
+	float: left;
+	width: 50%;
+}
+
+
+#top-left p {
+	padding: 0;
+	margin: 0;
+}
+
+#top-right {
+	padding: 0;
+	margin: 0;
+ 	margin-left: 50%;
+ 	width: 50%;
+} 
+#top-rigth p {
+	padding: 0;
+	margin: 0;
+} 
+
+#togglePost {
+	margin: 50px;
 	text-align: center;
-	padding: 20px;
+}
+
+.clear {
+	clear: both;
+}
+
+#subscribe-container {
+	display: inline-block;
+	text-align: right;
+	position: absolute;
+	right: 20px;
 }
 
 #extraPosts {
@@ -52,5 +103,6 @@ textarea {
 
 #newPost {
 	display: none;
+	text-align:center;
 }
 
